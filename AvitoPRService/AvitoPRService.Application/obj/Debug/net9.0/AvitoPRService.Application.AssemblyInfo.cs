@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AvitoPRService.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e0cb583ff218d80e1ef7d63edb67b1c413fb76a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("AvitoPRService.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AvitoPRService.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
