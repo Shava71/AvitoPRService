@@ -1,8 +1,10 @@
+using AvitoPRService.Domain.ValueObject;
+
 namespace AvitoPRService.Domain.Exception;
 
 public class PrExistsException : DomainException
 {
-    override public string Code => "PR_EXISTS";
+    override public ErrorCode Code => ErrorCode.PR_EXISTS;
     
     public PrExistsException() : base("PR already exists"){}
 }

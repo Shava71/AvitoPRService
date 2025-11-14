@@ -1,3 +1,4 @@
+using AvitoPRService.Application;
 using AvitoPRService.Domain.ValueObject;
 
 namespace AvitoPRService.Api.ApiMapper;

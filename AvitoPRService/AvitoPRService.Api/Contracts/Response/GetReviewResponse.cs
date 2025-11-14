@@ -1,4 +1,6 @@
 #nullable disable
+using AvitoPRService.Application;
+
 namespace AvitoPRService.Api;
 
 public partial class GetReviewResponse

@@ -1,5 +1,5 @@
 #nullable disable
-namespace AvitoPRService.Api;
+namespace AvitoPRService.Application;
 
 public enum PullRequestStatusDto
 {

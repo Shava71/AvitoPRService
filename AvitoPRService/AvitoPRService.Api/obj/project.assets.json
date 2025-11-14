@@ -314,7 +314,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "AvitoPRService.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.11",
+          "Newtonsoft.Json": "13.0.4",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4"
         },
         "compile": {

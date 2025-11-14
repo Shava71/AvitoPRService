@@ -1,5 +1,7 @@
 #nullable disable
-namespace AvitoPRService.Api;
+using AvitoPRService.Application;
+
+namespace AvitoPRService.Application;
 
 
 public partial class ErrorDto

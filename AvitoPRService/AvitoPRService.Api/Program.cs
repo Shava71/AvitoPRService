@@ -13,7 +13,7 @@ var app = builder.Build();
 
 
 app.UseHttpsRedirection();
-
+app.UseExceptionHandler(); //собственный middleware обработки ошибок
 
 
 app.Run();
