@@ -35,7 +35,7 @@ namespace AvitoPRService.Api
 
         /// <returns>Команда создана</returns>
 
-        System.Threading.Tasks.Task<Response> AddAsync(Team body);
+        System.Threading.Tasks.Task<CreateTeamResponse> AddAsync(TeamDto body);
 
         /// <summary>
         /// Получить команду с участниками
@@ -45,7 +45,7 @@ namespace AvitoPRService.Api
 
         /// <returns>Объект команды</returns>
 
-        System.Threading.Tasks.Task<Team> GetAsync(string team_name);
+        System.Threading.Tasks.Task<TeamDto> GetAsync(string team_name);
 
         /// <summary>
         /// Установить флаг активности пользователя
@@ -54,7 +54,7 @@ namespace AvitoPRService.Api
 
         /// <returns>Обновлённый пользователь</returns>
 
-        System.Threading.Tasks.Task<Response2> SetIsActiveAsync(Body body);
+        System.Threading.Tasks.Task<SetUserIsActiveResponse> SetIsActiveAsync(SetUserIsActiveRequest setUserIsActiveRequest);
 
         /// <summary>
         /// Создать PR и автоматически назначить до 2 ревьюверов из команды автора
@@ -63,7 +63,7 @@ namespace AvitoPRService.Api
 
         /// <returns>PR создан</returns>
 
-        System.Threading.Tasks.Task<Response3> CreateAsync(Body2 body);
+        System.Threading.Tasks.Task<CreatePullRequestResponse> CreateAsync(CreatePullRequestRequest body);
 
         /// <summary>
         /// Пометить PR как MERGED (идемпотентная операция)
@@ -72,7 +72,7 @@ namespace AvitoPRService.Api
 
         /// <returns>PR в состоянии MERGED</returns>
 
-        System.Threading.Tasks.Task<Response4> MergeAsync(Body3 body);
+        System.Threading.Tasks.Task<MergePullRequestResponse> MergeAsync(MergePullRequestRequest body);
 
         /// <summary>
         /// Переназначить конкретного ревьювера на другого из его команды
@@ -81,7 +81,7 @@ namespace AvitoPRService.Api
 
         /// <returns>Переназначение выполнено</returns>
 
-        System.Threading.Tasks.Task<Response5> ReassignAsync(Body4 body);
+        System.Threading.Tasks.Task<ReassignReviewerResponse> ReassignAsync(ReassingReviewerRequest body);
 
         /// <summary>
         /// Получить PR'ы, где пользователь назначен ревьювером
@@ -91,7 +91,7 @@ namespace AvitoPRService.Api
 
         /// <returns>Список PR'ов пользователя</returns>
 
-        System.Threading.Tasks.Task<Response6> GetReviewAsync(string user_id);
+        System.Threading.Tasks.Task<GetReviewResponse> GetReviewAsync(string user_id);
 
     }
 
@@ -111,7 +111,7 @@ namespace AvitoPRService.Api
         /// </summary>
         /// <returns>Команда создана</returns>
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("team/add")]
-        public System.Threading.Tasks.Task<Response> Add([Microsoft.AspNetCore.Mvc.FromBody] Team body)
+        public System.Threading.Tasks.Task<CreateTeamResponse> Add([Microsoft.AspNetCore.Mvc.FromBody] TeamDto body)
         {
 
             return _implementation.AddAsync(body);
@@ -123,7 +123,7 @@ namespace AvitoPRService.Api
         /// <param name="team_name">Уникальное имя команды</param>
         /// <returns>Объект команды</returns>
         [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("team/get")]
-        public System.Threading.Tasks.Task<Team> Get([Microsoft.AspNetCore.Mvc.FromQuery] string team_name)
+        public System.Threading.Tasks.Task<TeamDto> Get([Microsoft.AspNetCore.Mvc.FromQuery] string team_name)
         {
 
             return _implementation.GetAsync(team_name);
@@ -134,10 +134,10 @@ namespace AvitoPRService.Api
         /// </summary>
         /// <returns>Обновлённый пользователь</returns>
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("users/setIsActive")]
-        public System.Threading.Tasks.Task<Response2> SetIsActive([Microsoft.AspNetCore.Mvc.FromBody] Body body)
+        public System.Threading.Tasks.Task<SetUserIsActiveResponse> SetIsActive([Microsoft.AspNetCore.Mvc.FromBody] SetUserIsActiveRequest setUserIsActiveRequest)
         {
 
-            return _implementation.SetIsActiveAsync(body);
+            return _implementation.SetIsActiveAsync(setUserIsActiveRequest);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace AvitoPRService.Api
         /// </summary>
         /// <returns>PR создан</returns>
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("pullRequest/create")]
-        public System.Threading.Tasks.Task<Response3> Create([Microsoft.AspNetCore.Mvc.FromBody] Body2 body)
+        public System.Threading.Tasks.Task<CreatePullRequestResponse> Create([Microsoft.AspNetCore.Mvc.FromBody] CreatePullRequestRequest body)
         {
 
             return _implementation.CreateAsync(body);
@@ -156,7 +156,7 @@ namespace AvitoPRService.Api
         /// </summary>
         /// <returns>PR в состоянии MERGED</returns>
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("pullRequest/merge")]
-        public System.Threading.Tasks.Task<Response4> Merge([Microsoft.AspNetCore.Mvc.FromBody] Body3 body)
+        public System.Threading.Tasks.Task<MergePullRequestResponse> Merge([Microsoft.AspNetCore.Mvc.FromBody] MergePullRequestRequest body)
         {
 
             return _implementation.MergeAsync(body);
@@ -167,7 +167,7 @@ namespace AvitoPRService.Api
         /// </summary>
         /// <returns>Переназначение выполнено</returns>
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("pullRequest/reassign")]
-        public System.Threading.Tasks.Task<Response5> Reassign([Microsoft.AspNetCore.Mvc.FromBody] Body4 body)
+        public System.Threading.Tasks.Task<ReassignReviewerResponse> Reassign([Microsoft.AspNetCore.Mvc.FromBody] ReassingReviewerRequest body)
         {
 
             return _implementation.ReassignAsync(body);
@@ -179,421 +179,10 @@ namespace AvitoPRService.Api
         /// <param name="user_id">Идентификатор пользователя</param>
         /// <returns>Список PR'ов пользователя</returns>
         [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("users/getReview")]
-        public System.Threading.Tasks.Task<Response6> GetReview([Microsoft.AspNetCore.Mvc.FromQuery] string user_id)
+        public System.Threading.Tasks.Task<GetReviewResponse> GetReview([Microsoft.AspNetCore.Mvc.FromQuery] string user_id)
         {
 
             return _implementation.GetReviewAsync(user_id);
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ErrorResponse
-    {
-
-        [Newtonsoft.Json.JsonProperty("error", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public Error Error { get; set; } = new Error();
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TeamMember
-    {
-
-        [Newtonsoft.Json.JsonProperty("user_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string User_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("username", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Username { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("is_active", Required = Newtonsoft.Json.Required.Always)]
-        public bool Is_active { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Team
-    {
-
-        [Newtonsoft.Json.JsonProperty("team_name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Team_name { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("members", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<TeamMember> Members { get; set; } = new System.Collections.Generic.List<TeamMember>();
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class User
-    {
-
-        [Newtonsoft.Json.JsonProperty("user_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string User_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("username", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Username { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("team_name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Team_name { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("is_active", Required = Newtonsoft.Json.Required.Always)]
-        public bool Is_active { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PullRequest
-    {
-
-        [Newtonsoft.Json.JsonProperty("pull_request_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Pull_request_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pull_request_name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Pull_request_name { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("author_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Author_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public PullRequestStatus Status { get; set; }
-
-        /// <summary>
-        /// user_id назначенных ревьюверов (0..2)
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("assigned_reviewers", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<string> Assigned_reviewers { get; set; } = new System.Collections.Generic.List<string>();
-
-        [Newtonsoft.Json.JsonProperty("createdAt", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? CreatedAt { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("mergedAt", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? MergedAt { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PullRequestShort
-    {
-
-        [Newtonsoft.Json.JsonProperty("pull_request_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Pull_request_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pull_request_name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Pull_request_name { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("author_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Author_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public PullRequestShortStatus Status { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Body
-    {
-
-        [Newtonsoft.Json.JsonProperty("user_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string User_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("is_active", Required = Newtonsoft.Json.Required.Always)]
-        public bool Is_active { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Body2
-    {
-
-        [Newtonsoft.Json.JsonProperty("pull_request_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Pull_request_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pull_request_name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Pull_request_name { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("author_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Author_id { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Body3
-    {
-
-        [Newtonsoft.Json.JsonProperty("pull_request_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Pull_request_id { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Body4
-    {
-
-        [Newtonsoft.Json.JsonProperty("pull_request_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Pull_request_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("old_user_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Old_user_id { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response
-    {
-
-        [Newtonsoft.Json.JsonProperty("team", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Team Team { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response2
-    {
-
-        [Newtonsoft.Json.JsonProperty("user", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public User User { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response3
-    {
-
-        [Newtonsoft.Json.JsonProperty("pr", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PullRequest Pr { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response4
-    {
-
-        [Newtonsoft.Json.JsonProperty("pr", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PullRequest Pr { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response5
-    {
-
-        [Newtonsoft.Json.JsonProperty("pr", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public PullRequest Pr { get; set; } = new PullRequest();
-
-        /// <summary>
-        /// user_id нового ревьювера
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("replaced_by", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Replaced_by { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response6
-    {
-
-        [Newtonsoft.Json.JsonProperty("user_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string User_id { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pull_requests", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<PullRequestShort> Pull_requests { get; set; } = new System.Collections.Generic.List<PullRequestShort>();
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Error
-    {
-
-        [Newtonsoft.Json.JsonProperty("code", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ErrorCode Code { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Message { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
         }
 
     }

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "t0jDV51TMjo=",
+  "dgSpecHash": "j2yYeBg38NA=",
   "success": true,
   "projectFilePath": "/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Api/AvitoPRService.Api.csproj",
   "expectedPackageFiles": [
     "/Users/mac/.nuget/packages/microsoft.aspnetcore.openapi/9.0.9/microsoft.aspnetcore.openapi.9.0.9.nupkg.sha512",
-    "/Users/mac/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+    "/Users/mac/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512",
+    "/Users/mac/.nuget/packages/newtonsoft.json/13.0.4/newtonsoft.json.13.0.4.nupkg.sha512"
   ],
   "logs": []
 }

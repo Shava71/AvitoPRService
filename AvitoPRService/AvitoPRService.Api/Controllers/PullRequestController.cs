@@ -17,7 +17,7 @@ public class PullRequestController : ControllerBase
     /// </summary>
     /// <returns>PR создан</returns>
     [HttpPost("create")]
-    public async Task<Response3> Create([FromBody] Body2 body)
+    public async Task<CreatePullRequestResponse> Create([FromBody] CreatePullRequestRequest request)
     {
 
     }
@@ -26,8 +26,8 @@ public class PullRequestController : ControllerBase
     /// Пометить PR как MERGED (идемпотентная операция)
     /// </summary>
     /// <returns>PR в состоянии MERGED</returns>
-    [HttpPost("pullRequest/merge")]
-    public System.Threading.Tasks.Task<Response4> Merge([Microsoft.AspNetCore.Mvc.FromBody] Body3 body)
+    [HttpPost("merge")]
+    public async Task<MergePullRequestResponse> Merge([FromBody] MergePullRequestRequest request)
     {
 
     }
@@ -36,8 +36,8 @@ public class PullRequestController : ControllerBase
     /// Переназначить конкретного ревьювера на другого из его команды
     /// </summary>
     /// <returns>Переназначение выполнено</returns>
-    [HttpPost("pullRequest/reassign")]
-    public async Task<Response5> Reassign([FromBody] Body4 body)
+    [HttpPost("reassign")]
+    public async Task<ReassignReviewerResponse> Reassign([FromBody] ReassingReviewerRequest request)
     {
 
     }

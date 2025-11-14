@@ -17,7 +17,7 @@ public class TeamController : ControllerBase
     /// </summary>
     /// <returns>Команда создана</returns>
     [HttpPost("add")]
-    public async Task<IActionResult<Response>> Add([FromBody] Team body)
+    public async Task<IActionResult<CreateTeamResponse>> Add([FromBody] TeamDto body)
     {
 
     }
@@ -28,7 +28,7 @@ public class TeamController : ControllerBase
     /// <param name="team_name">Уникальное имя команды</param>
     /// <returns>Объект команды</returns>
     [HttpGet("get")]
-    public async Task<IActionResult<Team>> Get([FromQuery] string team_name)
+    public async Task<IActionResult<TeamDto>> Get([FromQuery] string team_name)
     {
 
     }

@@ -17,7 +17,7 @@ public class UserController : ControllerBase
     /// </summary>
     /// <returns>Обновлённый пользователь</returns>
     [HttpPost("setIsActive")]
-    public async Task<Response2> SetIsActive([FromBody] Body body)
+    public async Task<SetUserIsActiveResponse> SetIsActive([FromBody] SetUserIsActiveRequest request)
     {
         
     }
@@ -28,7 +28,7 @@ public class UserController : ControllerBase
     /// <param name="user_id">Идентификатор пользователя</param>
     /// <returns>Список PR'ов пользователя</returns>
     [HttpGet("getReview")]
-    public async Task<Response6> GetReview([FromQuery] string user_id)
+    public async Task<GetReviewResponse> GetReview([FromQuery] string user_id)
     {
 
     }
