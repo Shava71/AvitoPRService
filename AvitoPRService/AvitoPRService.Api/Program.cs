@@ -7,7 +7,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
+// DI
 builder.Services.AddRepository();
+builder.Services.AddServices();
 
 var app = builder.Build();
 
