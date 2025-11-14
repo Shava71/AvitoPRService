@@ -19,7 +19,7 @@ public partial class PullRequestDto
     [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
     [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public PullRequestStatus Status { get; set; }
+    public PullRequestStatusDto StatusDto { get; set; }
 
     /// <summary>
     /// user_id назначенных ревьюверов (0..2)

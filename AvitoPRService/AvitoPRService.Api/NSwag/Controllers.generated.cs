@@ -4,6 +4,8 @@
 // </auto-generated>
 //----------------------
 
+/*
+
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
 #pragma warning disable 472 // Disable "CS0472 The result of the expression is always 'false' since a value of type 'Int32' is never equal to 'null' of type 'Int32?'
@@ -186,56 +188,6 @@ namespace AvitoPRService.Api
         }
 
     }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum PullRequestStatus
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"OPEN")]
-        OPEN = 0,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"MERGED")]
-        MERGED = 1,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum PullRequestShortStatus
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"OPEN")]
-        OPEN = 0,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"MERGED")]
-        MERGED = 1,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum ErrorCode
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"TEAM_EXISTS")]
-        TEAM_EXISTS = 0,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"PR_EXISTS")]
-        PR_EXISTS = 1,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"PR_MERGED")]
-        PR_MERGED = 2,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"NOT_ASSIGNED")]
-        NOT_ASSIGNED = 3,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"NO_CANDIDATE")]
-        NO_CANDIDATE = 4,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"NOT_FOUND")]
-        NOT_FOUND = 5,
-
-    }
-
-
 }
 
 #pragma warning restore  108
@@ -253,3 +205,5 @@ namespace AvitoPRService.Api
 #pragma warning restore 8604
 #pragma warning restore 8625
 #pragma warning restore 8765
+
+*/

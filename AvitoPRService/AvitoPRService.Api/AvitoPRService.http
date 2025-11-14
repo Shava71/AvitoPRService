@@ -1,6 +1,0 @@
-@AvitoPRService_HostAddress = http://localhost:5294
-
-GET {{AvitoPRService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
