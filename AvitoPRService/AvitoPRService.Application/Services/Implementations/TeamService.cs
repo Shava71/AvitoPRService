@@ -1,5 +1,6 @@
 using AvitoPRService.Application.Services.Interfaces;
 using AvitoPRService.Domain.Entities;
+using AvitoPRService.Domain.Exception;
 using AvitoPRService.Domain.Repositories.Interfaces;
 
 namespace AvitoPRService.Application.Services.Implementations;
@@ -14,11 +15,15 @@ public class TeamService : ITeamService
         _teamRepo = teamRepo;
         _userRepo = userRepo;
     }
-    public async Task<Team> CreateOrUpdateTeamAsync(string teamName, List<(string userId, string username, bool isActive)> members, CancellationToken cancellationToken = default)
+    public async Task<Team> CreateTeamAsync(string teamName, List<(string userId, string username, bool isActive)> members, CancellationToken cancellationToken = default)
     {
-        Team team = await _teamRepo.GetByNameAsync(teamName, cancellationToken);
+        Team? team = await _teamRepo.GetByNameAsync(teamName, cancellationToken);
 
-        if (team == null)
+        if (team != null)
+        {
+            throw new TeamExistsException(); // такая команда уже существует
+        }
+        else
         {
             team = new Team(teamName);
             await _teamRepo.AddAsync(team, cancellationToken);
@@ -26,7 +31,7 @@ public class TeamService : ITeamService
 
         foreach ((string userId, string username, bool isActive) member in members)
         {
-            User user = await _userRepo.GetByIdAsync(member.userId, cancellationToken);
+            User? user = await _userRepo.GetByIdAsync(member.userId, cancellationToken);
 
             if (user == null)
             {

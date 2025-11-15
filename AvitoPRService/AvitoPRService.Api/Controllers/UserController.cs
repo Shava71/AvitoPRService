@@ -1,3 +1,5 @@
+using AvitoPRService.Application.Services.Interfaces;
+using AvitoPRService.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AvitoPRService.Api.Controllers;
@@ -6,10 +8,11 @@ namespace AvitoPRService.Api.Controllers;
 [Route("users")]
 public class UserController : ControllerBase
 {
+    private readonly IUserService _userService;
     
-    public UserController()
+    public UserController(IUserService userService)
     {
-        
+        _userService = userService;
     }
     
     /// <summary>
@@ -17,9 +20,10 @@ public class UserController : ControllerBase
     /// </summary>
     /// <returns>Обновлённый пользователь</returns>
     [HttpPost("setIsActive")]
-    public async Task<SetUserIsActiveResponse> SetIsActive([FromBody] SetUserIsActiveRequest request)
+    public async Task<IActionResult> SetIsActive([FromBody] SetUserIsActiveRequest request)
     {
-        
+        var user = await _userService.SetUserActiveAsync(request.User_id, request.Is_active);
+        return Ok(new SetUserIsActiveResponse { UserDto = DtoMapper.ToUserDto(user) });
     }
     
     /// <summary>
@@ -28,9 +32,17 @@ public class UserController : ControllerBase
     /// <param name="user_id">Идентификатор пользователя</param>
     /// <returns>Список PR'ов пользователя</returns>
     [HttpGet("getReview")]
-    public async Task<GetReviewResponse> GetReview([FromQuery] string user_id)
+    public async Task<IActionResult> GetReview([FromQuery] string user_id)
     {
+        var prs = await _userService.GetUserReviewsAsync(user_id);
 
+        var resp = new GetReviewResponse
+        {
+            User_id = user_id,
+            Pull_requests = prs.Select(DtoMapper.ToPullRequestShortDto).ToList()
+        };
+
+        return Ok(resp);
     }
     
 }

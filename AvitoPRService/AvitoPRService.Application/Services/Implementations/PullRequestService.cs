@@ -7,16 +7,16 @@ namespace AvitoPRService.Application.Services.Implementations;
 
 public class PullRequestService : IPullRequestService
 {
-    private readonly IPullRequestRepository _prRepo;
+    private readonly IPullRequestRepository _pullRequestRepo;
     private readonly IUserRepository _userRepo;
     private readonly IReviewerRepository _reviewerRepo;
 
     public PullRequestService(
-        IPullRequestRepository prRepo,
+        IPullRequestRepository pullRequestRepo,
         IUserRepository userRepo,
         IReviewerRepository reviewerRepo)
     {
-        _prRepo = prRepo;
+        _pullRequestRepo = pullRequestRepo;
         _userRepo = userRepo;
         _reviewerRepo = reviewerRepo;
     }
@@ -24,45 +24,49 @@ public class PullRequestService : IPullRequestService
     public async Task<PullRequest> CreateAsync(string pullRequestId, string pullRequestName, string authorId,
         CancellationToken cancellationToken = default)
     {
+        PullRequest? existingPr = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken);
+        if (existingPr != null)
+        {
+            throw new PrExistsException(); // такой PullRequest уже существует
+        }
+        
         User author = await _userRepo.GetByIdAsync(authorId, cancellationToken)
-                     ?? throw new NotFoundException();
+                     ?? throw new NotFoundException(); // профиль автора не найдет
 
-        List<User> activeMembers = await _userRepo.GetTeamActiveMembersAsync(author.TeamName, cancellationToken);
+        List<User> activeMembers = await _userRepo.GetTeamActiveMembersAsync(author.TeamName, cancellationToken); // находим людей из команты автора
 
         List<User> reviewers = activeMembers
             .Where(u => u.UserId != authorId)
             .OrderBy(_ => Guid.NewGuid())
             .Take(2)
-            .ToList();
-
-        if (!reviewers.Any())
-        {
-            throw new NoCandidateException();
-        }
+            .ToList(); // берём двух людей из команды кроме автора
 
         PullRequest pr = new PullRequest(pullRequestId, pullRequestName, author);
-        pr.AssignReviewers(reviewers);
-
-        await _prRepo.AddAsync(pr, cancellationToken);
+        
+        if (reviewers.Any())
+        {
+            await _pullRequestRepo.AddAsync(pr, cancellationToken);
+        }
+        pr.AssignReviewers(reviewers); // добавляем кандидатов
 
         return pr;
     }
 
     public async Task<PullRequest> MergeAsync(string pullRequestId, CancellationToken cancellationToken = default)
     {
-        PullRequest pullRequest = await _prRepo.GetByIdAsync(pullRequestId, cancellationToken)
+        PullRequest pullRequest = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken)
                  ?? throw new NotFoundException();
 
         pullRequest.Merge();
 
-        await _prRepo.UpdateAsync(pullRequest, cancellationToken);
+        await _pullRequestRepo.UpdateAsync(pullRequest, cancellationToken);
 
         return pullRequest;
     }
 
     public async Task<PullRequest> ReassignReviewerAsync(string pullRequestId, string oldReviewerId, CancellationToken cancellationToken = default)
     {
-        var pr = await _prRepo.GetByIdAsync(pullRequestId, cancellationToken)
+        var pr = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken)
                  ?? throw new NotFoundException();
 
         var oldReviewer = pr.Reviewers.FirstOrDefault(r => r.UserId == oldReviewerId)
@@ -77,12 +81,12 @@ public class PullRequestService : IPullRequestService
                               .Where(u => u.UserId != oldReviewerId)
                               .OrderBy(_ => Guid.NewGuid())
                               .FirstOrDefault()
-                          //?? throw new NoCandidateException()
+                          ?? throw new NoCandidateException()
                           ;
 
         pr.ReplaceReviewer(user, replacement);
 
-        await _prRepo.UpdateAsync(pr, cancellationToken);
+        await _pullRequestRepo.UpdateAsync(pr, cancellationToken);
 
         return pr;
     }

@@ -4,6 +4,6 @@ namespace AvitoPRService.Application.Services.Interfaces;
 
 public interface ITeamService
 {
-    Task<Team> CreateOrUpdateTeamAsync(string teamName, List<(string userId, string username, bool isActive)> members, CancellationToken cancellationToken = default);
+    Task<Team> CreateTeamAsync(string teamName, List<(string userId, string username, bool isActive)> members, CancellationToken cancellationToken = default);
     Task<Team?> GetTeamAsync(string teamName, CancellationToken cancellationToken = default);
 }

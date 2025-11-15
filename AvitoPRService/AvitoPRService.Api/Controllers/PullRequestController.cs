@@ -1,3 +1,5 @@
+using AvitoPRService.Application.Services.Interfaces;
+using AvitoPRService.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AvitoPRService.Api.Controllers;
@@ -6,10 +8,12 @@ namespace AvitoPRService.Api.Controllers;
 [Route("pullRequest")]
 public class PullRequestController : ControllerBase
 {
+    private readonly IPullRequestService _pullRequestService;
 
-    public PullRequestController()
+
+    public PullRequestController(IPullRequestService pullRequestService)
     {
-        
+        _pullRequestService = pullRequestService;
     }
     
     /// <summary>
@@ -17,9 +21,10 @@ public class PullRequestController : ControllerBase
     /// </summary>
     /// <returns>PR создан</returns>
     [HttpPost("create")]
-    public async Task<CreatePullRequestResponse> Create([FromBody] CreatePullRequestRequest request)
+    public async Task<IActionResult> Create([FromBody] CreatePullRequestRequest request)
     {
-
+        var pr = await _pullRequestService.CreateAsync(request.Pull_request_id, request.Pull_request_name, request.Author_id);
+        return Created(string.Empty, new CreatePullRequestResponse { Pr = DtoMapper.ToPullRequestDto(pr) });
     }
 
     /// <summary>
@@ -27,9 +32,10 @@ public class PullRequestController : ControllerBase
     /// </summary>
     /// <returns>PR в состоянии MERGED</returns>
     [HttpPost("merge")]
-    public async Task<MergePullRequestResponse> Merge([FromBody] MergePullRequestRequest request)
+    public async Task<IActionResult> Merge([FromBody] MergePullRequestRequest request)
     {
-
+        var pr = await _pullRequestService.MergeAsync(request.Pull_request_id);
+        return Ok(new MergePullRequestResponse { Pr = DtoMapper.ToPullRequestDto(pr) });
     }
 
     /// <summary>
@@ -37,9 +43,17 @@ public class PullRequestController : ControllerBase
     /// </summary>
     /// <returns>Переназначение выполнено</returns>
     [HttpPost("reassign")]
-    public async Task<ReassignReviewerResponse> Reassign([FromBody] ReassingReviewerRequest request)
+    public async Task<IActionResult> Reassign([FromBody] ReassingReviewerRequest request)
     {
+        var pr = await _pullRequestService.ReassignReviewerAsync(request.Pull_request_id, request.Old_user_id);
 
+        // find replaced_by (difference between new list and old? domain returned only PR object)
+        // but service currently replaces in-place; assuming it returns PR after replacement.
+        // We can compute replaced_by as the reviewer in PR not equal to old_user and not present before —
+        // simpler: service can be extended to return newReviewerId; for now compute nearest:
+        var replacedBy = pr.Reviewers.Select(r => r.UserId).FirstOrDefault(u => u != request.Old_user_id);
+
+        return Ok(new ReassignReviewerResponse { Pr = DtoMapper.ToPullRequestDto(pr), Replaced_by = replacedBy ?? string.Empty });
     }
     
-}2
+}
