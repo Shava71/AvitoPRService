@@ -1,0 +1,13 @@
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/bin/Debug/net9.0/AvitoPRService.Domain.deps.json
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/bin/Debug/net9.0/AvitoPRService.Domain.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/bin/Debug/net9.0/AvitoPRService.Domain.pdb
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.csproj.AssemblyReference.cache
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.AssemblyInfoInputs.cache
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.AssemblyInfo.cs
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.csproj.CoreCompileInputs.cache
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.sourcelink.json
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/refint/AvitoPRService.Domain.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.pdb
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/ref/AvitoPRService.Domain.dll

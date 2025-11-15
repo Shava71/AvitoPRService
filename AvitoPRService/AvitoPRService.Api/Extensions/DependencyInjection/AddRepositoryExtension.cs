@@ -11,6 +11,7 @@ public static class AddRepositoryExtension
         services.AddScoped<IReviewerRepository, ReviewerRepository>();
         services.AddScoped<ITeamRepository, TeamRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         return services;
     }

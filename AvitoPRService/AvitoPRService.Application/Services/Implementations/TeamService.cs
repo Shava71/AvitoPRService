@@ -9,11 +9,13 @@ public class TeamService : ITeamService
 {
     private readonly ITeamRepository _teamRepo;
     private readonly IUserRepository _userRepo;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public TeamService(ITeamRepository teamRepo, IUserRepository userRepo)
+    public TeamService(ITeamRepository teamRepo, IUserRepository userRepo, IUnitOfWork unitOfWork)
     {
         _teamRepo = teamRepo;
         _userRepo = userRepo;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Team> CreateTeamAsync(string teamName, List<(string userId, string username, bool isActive)> members, CancellationToken cancellationToken = default)
     {
@@ -52,8 +54,9 @@ public class TeamService : ITeamService
                 team.Members.Add(user);
         }
 
-        await _teamRepo.UpdateAsync(team, cancellationToken); 
-        
+        await _teamRepo.UpdateAsync(team, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync();
         return team;
     }
 

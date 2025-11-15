@@ -10,46 +10,63 @@ public class PullRequestService : IPullRequestService
     private readonly IPullRequestRepository _pullRequestRepo;
     private readonly IUserRepository _userRepo;
     private readonly IReviewerRepository _reviewerRepo;
+    private readonly IUnitOfWork _unitOfWork;
 
     public PullRequestService(
         IPullRequestRepository pullRequestRepo,
         IUserRepository userRepo,
-        IReviewerRepository reviewerRepo)
+        IReviewerRepository reviewerRepo,
+        IUnitOfWork unitOfWork)
     {
         _pullRequestRepo = pullRequestRepo;
         _userRepo = userRepo;
         _reviewerRepo = reviewerRepo;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<PullRequest> CreateAsync(string pullRequestId, string pullRequestName, string authorId,
         CancellationToken cancellationToken = default)
     {
-        PullRequest? existingPr = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken);
-        if (existingPr != null)
+        await _unitOfWork.BeginTransactionAsync(cancellationToken);
+        try
         {
-            throw new PrExistsException(); // такой PullRequest уже существует
+            PullRequest? existingPr = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken);
+            if (existingPr != null)
+            {
+                throw new PrExistsException(); // такой PullRequest уже существует
+            }
+
+            User author = await _userRepo.GetByIdAsync(authorId, cancellationToken)
+                          ?? throw new NotFoundException(); // профиль автора не найдет
+
+            List<User> activeMembers =
+                await _userRepo.GetTeamActiveMembersAsync(author.TeamName,
+                    cancellationToken); // находим людей из команты автора
+
+            List<User> reviewers = activeMembers
+                .Where(u => u.UserId != authorId)
+                .OrderBy(_ => Guid.NewGuid())
+                .Take(2)
+                .ToList(); // берём двух людей из команды кроме автора
+
+            PullRequest pr = new PullRequest(pullRequestId, pullRequestName, author);
+
+            if (reviewers.Any())
+            {
+                await _pullRequestRepo.AddAsync(pr, cancellationToken);
+            }
+
+            pr.AssignReviewers(reviewers); // добавляем кандидатов
+            await _unitOfWork.CommitAsync(cancellationToken);
+
+            return pr;
+        }
+        catch (Exception ex)
+        {
+            await _unitOfWork.RollbackAsync(cancellationToken);
+            throw;
         }
         
-        User author = await _userRepo.GetByIdAsync(authorId, cancellationToken)
-                     ?? throw new NotFoundException(); // профиль автора не найдет
-
-        List<User> activeMembers = await _userRepo.GetTeamActiveMembersAsync(author.TeamName, cancellationToken); // находим людей из команты автора
-
-        List<User> reviewers = activeMembers
-            .Where(u => u.UserId != authorId)
-            .OrderBy(_ => Guid.NewGuid())
-            .Take(2)
-            .ToList(); // берём двух людей из команды кроме автора
-
-        PullRequest pr = new PullRequest(pullRequestId, pullRequestName, author);
-        
-        if (reviewers.Any())
-        {
-            await _pullRequestRepo.AddAsync(pr, cancellationToken);
-        }
-        pr.AssignReviewers(reviewers); // добавляем кандидатов
-
-        return pr;
     }
 
     public async Task<PullRequest> MergeAsync(string pullRequestId, CancellationToken cancellationToken = default)
@@ -61,15 +78,17 @@ public class PullRequestService : IPullRequestService
 
         await _pullRequestRepo.UpdateAsync(pullRequest, cancellationToken);
 
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
         return pullRequest;
     }
 
     public async Task<PullRequest> ReassignReviewerAsync(string pullRequestId, string oldReviewerId, CancellationToken cancellationToken = default)
     {
-        var pr = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken)
+        PullRequest pr = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken)
                  ?? throw new NotFoundException();
 
-        var oldReviewer = pr.Reviewers.FirstOrDefault(r => r.UserId == oldReviewerId)
+        Reviewer oldReviewer = pr.Reviewers.FirstOrDefault(r => r.UserId == oldReviewerId)
                           ?? throw new NotAssignedException();
 
         var user = await _userRepo.GetByIdAsync(oldReviewerId, cancellationToken)
@@ -87,6 +106,8 @@ public class PullRequestService : IPullRequestService
         pr.ReplaceReviewer(user, replacement);
 
         await _pullRequestRepo.UpdateAsync(pr, cancellationToken);
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return pr;
     }

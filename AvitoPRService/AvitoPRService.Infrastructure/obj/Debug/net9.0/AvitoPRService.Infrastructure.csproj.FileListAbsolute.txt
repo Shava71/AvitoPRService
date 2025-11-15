@@ -1,0 +1,16 @@
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/bin/Debug/net9.0/AvitoPRService.Infrastructure.deps.json
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/bin/Debug/net9.0/AvitoPRService.Infrastructure.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/bin/Debug/net9.0/AvitoPRService.Infrastructure.pdb
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/bin/Debug/net9.0/AvitoPRService.Domain.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/bin/Debug/net9.0/AvitoPRService.Domain.pdb
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.csproj.AssemblyReference.cache
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.AssemblyInfoInputs.cache
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.AssemblyInfo.cs
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.sourcelink.json
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRS.8F3B4E27.Up2Date
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/refint/AvitoPRService.Infrastructure.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.pdb
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/ref/AvitoPRService.Infrastructure.dll

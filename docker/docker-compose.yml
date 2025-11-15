@@ -1,0 +1,49 @@
+services:
+  # ---- AvitoPRService ----
+  avitoprservice:
+    build:
+      context: ../AvitoPRService
+      dockerfile: AvtoPRService.Api/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - avitoprservice-db
+    networks:
+      - backend
+  
+  # ---------- PostgreSQL для AvitoPRService ----------
+  avitoprservice-db:
+    image: postgres
+    container_name: avitoprservice-db
+    environment:
+      POSTGRES_USER: avitopruser
+      POSTGRES_PASSWORD: avitoprpass
+      POSTGRES_DB: avitoprdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql
+      - ../sql/triggers.sql:/docker-entrypoint-initdb.d/triggers.sql
+    networks:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./pgadmin/pgadmin-servers.json:/pgadmin4/servers.json
+    ports:
+      - "5050:80"
+    depends_on:
+      - avitoprservice-db
+
+# ---- Volumes ----
+volumes:
+  pg_data:
+  
+# ---- Networks ----
+networks:
+  backend:
+    driver: bridge

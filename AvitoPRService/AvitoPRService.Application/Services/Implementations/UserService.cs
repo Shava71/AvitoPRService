@@ -10,15 +10,18 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepo;
     private readonly IPullRequestRepository _pullrequestRepo;
     private readonly IReviewerRepository _reviewerRepo;
+    private readonly IUnitOfWork _unitOfWork;
     
     public UserService(
         IUserRepository userRepo,
         IPullRequestRepository pullrequestRepo,
-        IReviewerRepository reviewerRepo)
+        IReviewerRepository reviewerRepo,
+        IUnitOfWork unitOfWork)
     {
         _userRepo = userRepo;
         _pullrequestRepo = pullrequestRepo;
         _reviewerRepo = reviewerRepo;
+        _unitOfWork = unitOfWork;
     }
     
     public async Task<User> SetUserActiveAsync(string userId, bool active, CancellationToken cancellationToken = default)
@@ -28,6 +31,7 @@ public class UserService : IUserService
 
         user.SetActive(active);
         await _userRepo.UpdateAsync(user, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user;
     }
