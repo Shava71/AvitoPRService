@@ -1,4 +1,5 @@
 using AvitoPRService.Application;
+using AvitoPRService.Application.Dto;
 using AvitoPRService.Application.Services.Interfaces;
 using AvitoPRService.Domain.Entities;
 using AvitoPRService.Mapper;
@@ -56,7 +57,7 @@ public class TeamController : ControllerBase
     [HttpPost("deactivateUsers")]
     public async Task<IActionResult> DeactivateUsers([FromBody] DeactivateUsersRequest request)
     {
-        var result = await _teamService.DeactivateUsersAsync(request.UserIds, request.ReassignOpenPRs);
+        DeactivationResult result = await _teamService.DeactivateUsersAsync(request.UserIds, request.ReassignOpenPRs);
         return Ok(result);
     }
 }

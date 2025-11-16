@@ -33,7 +33,7 @@ services:
   # ---- AvitoPRService ----
   avitoprservice:
     build:
-      context: ../AvitoPRService
+      context: ./AvitoPRService
       dockerfile: AvitoPRService.Api/Dockerfile
     ports:
       - "8080:8080"

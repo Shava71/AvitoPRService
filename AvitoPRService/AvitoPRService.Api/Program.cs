@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -22,6 +23,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
                 errorCodesToAdd: null);
         });
 });
+
+
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -116,3 +119,9 @@ app.UseHttpsRedirection();
 // }
 
 app.Run();
+
+namespace AvitoPRService.Api
+{ 
+    public partial class Program { }
+}
+
