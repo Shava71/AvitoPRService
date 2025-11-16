@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "AvitoPRService": {
+      "Name": "AvitoPRService",
+      "Group": "Servers",
+      "Host": "avitoprservice-db",
+      "Port": 5432,
+      "MaintenanceDB": "avitoprdb",
+      "Username": "avitopruser",
+      "SSLMode": "prefer"
+    }
+  }
+}
