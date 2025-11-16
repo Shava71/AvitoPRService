@@ -1,0 +1,6 @@
+{
+  "AvitoPRService.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/mac\/Desktop\/AvitoBackendAutumn\/AvitoPRService\/AvitoPRService.Api",
+  "AvitoPRService.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/mac\/Desktop\/AvitoBackendAutumn\/AvitoPRService\/AvitoPRService.Application",
+  "AvitoPRService.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/mac\/Desktop\/AvitoBackendAutumn\/AvitoPRService\/AvitoPRService.Domain",
+  "AvitoPRService.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/mac\/Desktop\/AvitoBackendAutumn\/AvitoPRService\/AvitoPRService.Infrastructure"
+}

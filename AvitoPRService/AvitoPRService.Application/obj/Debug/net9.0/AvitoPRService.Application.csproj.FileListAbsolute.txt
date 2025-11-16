@@ -1,4 +1,5 @@
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/bin/Debug/net9.0/AvitoPRService.Application.deps.json
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/bin/Debug/net9.0/AvitoPRService.Application.runtimeconfig.json
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/bin/Debug/net9.0/AvitoPRService.Application.dll
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/bin/Debug/net9.0/AvitoPRService.Application.pdb
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/bin/Debug/net9.0/AvitoPRService.Domain.dll
@@ -13,6 +14,5 @@
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/obj/Debug/net9.0/AvitoPRService.Application.dll
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/obj/Debug/net9.0/refint/AvitoPRService.Application.dll
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/obj/Debug/net9.0/AvitoPRService.Application.pdb
-/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/obj/Debug/net9.0/ref/AvitoPRService.Application.dll
-/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/bin/Debug/net9.0/AvitoPRService.Application.runtimeconfig.json
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/obj/Debug/net9.0/AvitoPRService.Application.genruntimeconfig.cache
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Application/obj/Debug/net9.0/ref/AvitoPRService.Application.dll
