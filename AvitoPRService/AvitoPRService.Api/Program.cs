@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using AvitoPRService.DependencyInjection.ServiceExtentions;
+using AvitoPRService.Extensions.MiddlewareExtension;
 using AvitoPRService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
@@ -9,7 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    // string connectionStringWithTimeout = connectionString + ";Timeout=30;Command Timeout=30";
+    
+    options.UseNpgsql(connectionString, 
+        npgsqlOptions => 
+        {
+            npgsqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(10),
+                errorCodesToAdd: null);
+        });
 });
 
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -65,20 +76,27 @@ builder.Services.AddServices();
 
 var app = builder.Build();
 
+if (args.Contains("--migrate"))
+{
+    using var serviceScope = app.Services.CreateScope();
+    var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+    
+    context.Database.Migrate();
+    
+    string sql = File.ReadAllText("sql/triggers.sql");
+    context.Database.ExecuteSqlRaw(sql);
+
+    return;
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
 
-using (var serviceScope = app.Services.CreateScope())
-{
-    var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-    context.Database.Migrate();
-}
-
 app.UseRouting();
 app.UseCors();
-app.UseExceptionHandler(); //собственный middleware обработки ошибок
+app.UseAdditionalExceptionHandler(); //собственный middleware обработки ошибок
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -88,5 +106,13 @@ app.UseSwaggerUI(c =>
 app.MapControllers();
 app.UseHttpsRedirection();
 
+// using (var serviceScope = app.Services.CreateScope())
+// {
+//     var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+//     context.Database.Migrate();
+//
+//     string sql = File.ReadAllText("sql/triggers.sql");
+//     context.Database.ExecuteSqlRaw(sql);
+// }
 
 app.Run();

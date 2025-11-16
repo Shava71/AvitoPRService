@@ -30,6 +30,8 @@ public class TeamService : ITeamService
             team = new Team(teamName);
             await _teamRepo.AddAsync(team, cancellationToken);
         }
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         foreach ((string userId, string username, bool isActive) member in members)
         {

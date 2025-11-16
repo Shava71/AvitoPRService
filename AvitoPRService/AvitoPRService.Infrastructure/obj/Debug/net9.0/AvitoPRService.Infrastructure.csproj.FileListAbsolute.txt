@@ -14,3 +14,5 @@
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/refint/AvitoPRService.Infrastructure.dll
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.pdb
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/ref/AvitoPRService.Infrastructure.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/bin/Debug/net9.0/AvitoPRService.Infrastructure.runtimeconfig.json
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Infrastructure/obj/Debug/net9.0/AvitoPRService.Infrastructure.genruntimeconfig.cache

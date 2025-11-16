@@ -11,3 +11,5 @@
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/refint/AvitoPRService.Domain.dll
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.pdb
 /Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/ref/AvitoPRService.Domain.dll
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/bin/Debug/net9.0/AvitoPRService.Domain.runtimeconfig.json
+/Users/mac/Desktop/AvitoBackendAutumn/AvitoPRService/AvitoPRService.Domain/obj/Debug/net9.0/AvitoPRService.Domain.genruntimeconfig.cache

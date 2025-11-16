@@ -1,16 +1,5 @@
-services:
-  # ---- AvitoPRService ----
-  avitoprservice:
-    build:
-      context: ../AvitoPRService
-      dockerfile: AvtoPRService.Api/Dockerfile
-    ports:
-      - "8080:8080"
-    depends_on:
-      - avitoprservice-db
-    networks:
-      - backend
-  
+name: avitoprservice_Erikov
+services: 
   # ---------- PostgreSQL для AvitoPRService ----------
   avitoprservice-db:
     image: postgres
@@ -23,7 +12,7 @@ services:
       - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql
-      - ../sql/triggers.sql:/docker-entrypoint-initdb.d/triggers.sql
+    #  - ../sql/triggers.sql:/docker-entrypoint-initdb.d/triggers.sql
     networks:
       - backend
 
@@ -38,6 +27,20 @@ services:
       - "5050:80"
     depends_on:
       - avitoprservice-db
+    networks:
+      - backend
+  
+  # ---- AvitoPRService ----
+  avitoprservice:
+    build:
+      context: ../AvitoPRService
+      dockerfile: AvitoPRService.Api/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - avitoprservice-db
+    networks:
+      - backend
 
 # ---- Volumes ----
 volumes:
