@@ -41,8 +41,4 @@
       <ProjectReference Include="..\AvitoPRService.Infrastructure\AvitoPRService.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Integration\Infrastructure\" />
-    </ItemGroup>
-
 </Project>
