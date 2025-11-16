@@ -46,11 +46,7 @@ public class PullRequestController : ControllerBase
     public async Task<IActionResult> Reassign([FromBody] ReassingReviewerRequest request)
     {
         var pr = await _pullRequestService.ReassignReviewerAsync(request.Pull_request_id, request.Old_user_id);
-
-        // find replaced_by (difference between new list and old? domain returned only PR object)
-        // but service currently replaces in-place; assuming it returns PR after replacement.
-        // We can compute replaced_by as the reviewer in PR not equal to old_user and not present before —
-        // simpler: service can be extended to return newReviewerId; for now compute nearest:
+        
         var replacedBy = pr.Reviewers.Select(r => r.UserId).FirstOrDefault(u => u != request.Old_user_id);
 
         return Ok(new ReassignReviewerResponse { Pr = DtoMapper.ToPullRequestDto(pr), Replaced_by = replacedBy ?? string.Empty });

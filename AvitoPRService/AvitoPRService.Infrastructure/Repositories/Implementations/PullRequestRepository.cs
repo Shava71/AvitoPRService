@@ -43,4 +43,15 @@ public class PullRequestRepository : IPullRequestRepository
         }
         _dbContext.PullRequests.Remove(pullRequest);
     }
+    
+    public async Task<int> GetTotalCountAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.PullRequests.CountAsync(cancellationToken);
+    }
+
+    public async Task<int> GetCountByStatusAsync(string status, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.PullRequests
+            .CountAsync(pr => pr.Status.ToString() == status, cancellationToken);
+    }
 }

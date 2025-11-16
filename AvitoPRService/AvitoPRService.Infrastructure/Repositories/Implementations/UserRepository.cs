@@ -53,4 +53,10 @@ public class UserRepository : IUserRepository
         }
         _dbContext.Users.Remove(user);
     }
+    
+    public async Task<int> GetActiveUsersCountAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Users
+            .CountAsync(u => u.IsActive, cancellationToken);
+    }
 }

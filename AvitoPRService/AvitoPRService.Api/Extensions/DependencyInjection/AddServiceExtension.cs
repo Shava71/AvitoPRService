@@ -10,6 +10,7 @@ public static class AddServiceExtension
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IPullRequestService, PullRequestService>();
         services.AddScoped<ITeamService, TeamService>();
+        services.AddScoped<IStatsService, StatsService>();
         
         return services;
     }

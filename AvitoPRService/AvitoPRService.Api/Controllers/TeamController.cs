@@ -47,4 +47,16 @@ public class TeamController : ControllerBase
         
         return Ok(DtoMapper.ToTeamDto(team));
     }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPost("deactivateUsers")]
+    public async Task<IActionResult> DeactivateUsers([FromBody] DeactivateUsersRequest request)
+    {
+        var result = await _teamService.DeactivateUsersAsync(request.UserIds, request.ReassignOpenPRs);
+        return Ok(result);
+    }
 }

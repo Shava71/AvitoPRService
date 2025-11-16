@@ -45,4 +45,9 @@ public class TeamRepository : ITeamRepository
         }
         _dbContext.Teams.Remove(team);
     }
+    
+    public async Task<int> GetTotalCountAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Teams.CountAsync(cancellationToken);
+    }
 }
