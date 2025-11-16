@@ -69,7 +69,8 @@ public class PullRequest
         {
             throw new NotAssignedException();
         }
-        Reviewers[Reviewers.IndexOf(reviewer)].ChangeReviewer(newReviewer);
+        Reviewers.Remove(reviewer);
+        Reviewers.Add(new Reviewer(newReviewer, this));
         
     }
     

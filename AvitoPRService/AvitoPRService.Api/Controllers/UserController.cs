@@ -23,7 +23,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> SetIsActive([FromBody] SetUserIsActiveRequest request)
     {
         var user = await _userService.SetUserActiveAsync(request.User_id, request.Is_active);
-        return Ok(new SetUserIsActiveResponse { UserDto = DtoMapper.ToUserDto(user) });
+        return Ok(new SetUserIsActiveResponse { User = DtoMapper.ToUserDto(user) });
     }
     
     /// <summary>

@@ -27,7 +27,6 @@ public class PullRequestService : IPullRequestService
     public async Task<PullRequest> CreateAsync(string pullRequestId, string pullRequestName, string authorId,
         CancellationToken cancellationToken = default)
     {
-        await _unitOfWork.BeginTransactionAsync(cancellationToken);
         try
         {
             PullRequest? existingPr = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken);
@@ -42,28 +41,24 @@ public class PullRequestService : IPullRequestService
             List<User> activeMembers =
                 await _userRepo.GetTeamActiveMembersAsync(author.TeamName,
                     cancellationToken); // находим людей из команты автора
-
+        
+            Random random = new Random();
             List<User> reviewers = activeMembers
                 .Where(u => u.UserId != authorId)
-                .OrderBy(_ => Guid.NewGuid())
+                .OrderBy(_ => random.Next())
                 .Take(2)
                 .ToList(); // берём двух людей из команды кроме автора
 
             PullRequest pr = new PullRequest(pullRequestId, pullRequestName, author);
-
-            if (reviewers.Any())
-            {
-                await _pullRequestRepo.AddAsync(pr, cancellationToken);
-            }
-
             pr.AssignReviewers(reviewers); // добавляем кандидатов
-            await _unitOfWork.CommitAsync(cancellationToken);
+            
+            await _pullRequestRepo.AddAsync(pr, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return pr;
         }
         catch (Exception ex)
         {
-            await _unitOfWork.RollbackAsync(cancellationToken);
             throw;
         }
         
@@ -87,13 +82,13 @@ public class PullRequestService : IPullRequestService
     {
         PullRequest pr = await _pullRequestRepo.GetByIdAsync(pullRequestId, cancellationToken)
                  ?? throw new NotFoundException();
+        
+        User user = await _userRepo.GetByIdAsync(oldReviewerId, cancellationToken)
+                    ?? throw new NotFoundException();
 
         Reviewer oldReviewer = pr.Reviewers.FirstOrDefault(r => r.UserId == oldReviewerId)
                           ?? throw new NotAssignedException();
-
-        var user = await _userRepo.GetByIdAsync(oldReviewerId, cancellationToken)
-                   ?? throw new NotFoundException();
-
+        
         List<User> candidates = await _userRepo.GetTeamActiveMembersAsync(user.TeamName, cancellationToken);
 
         User replacement = candidates

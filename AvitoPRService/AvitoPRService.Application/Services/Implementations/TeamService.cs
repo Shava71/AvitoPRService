@@ -58,12 +58,19 @@ public class TeamService : ITeamService
 
         await _teamRepo.UpdateAsync(team, cancellationToken);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         return team;
     }
 
     public async Task<Team?> GetTeamAsync(string teamName, CancellationToken cancellationToken = default)
     {
-        return await _teamRepo.GetByNameAsync(teamName, cancellationToken);
+        Team? team = await _teamRepo.GetByNameAsync(teamName, cancellationToken);
+
+        if (team == null)
+        {
+            throw new NotFoundException();
+        }
+        
+        return team;
     }
 }

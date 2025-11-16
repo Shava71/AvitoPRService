@@ -31,7 +31,7 @@ public class TeamController : ControllerBase
 
         Team team = await _teamService.CreateTeamAsync(body.Team_name, members);
 
-        var resp = new CreateTeamResponse { TeamDto = DtoMapper.ToTeamDto(team) };
+        var resp = new CreateTeamResponse { Team = DtoMapper.ToTeamDto(team) };
         return Created(string.Empty, resp);
     }
 

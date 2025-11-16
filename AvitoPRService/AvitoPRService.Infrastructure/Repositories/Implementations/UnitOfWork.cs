@@ -49,6 +49,14 @@ public class UnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        await _transaction.DisposeAsync();
+        if (_dbcontext != null)
+        {
+            await _dbcontext.DisposeAsync();
+        }
+
+        if (_transaction != null)
+        {
+            await _transaction.DisposeAsync();
+        }
     }
 }
