@@ -42,3 +42,7 @@ clean:
 # Нагрузочное тестирование (k6)
 load-test:
 	k6 run load-test.js
+
+# Линтер
+lint:
+	dotnet format --verify-no-changes ./AvitoPRService/AvitoPRService.sln
