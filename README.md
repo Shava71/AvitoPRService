@@ -79,7 +79,7 @@ AvitoPRService/
 
 ### Шаг 1: Клонирование
 ``` bash
-git clone https://github.com/yourname/AvitoPRService.git](https://github.com/Shava71/AvitoPRService.git)
+git clone https://github.com/Shava71/AvitoPRService.git
 cd AvitoPRService
 ```
 
