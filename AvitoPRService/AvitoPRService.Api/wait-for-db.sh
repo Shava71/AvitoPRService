@@ -1,4 +1,5 @@
 #!/bin/sh
+# wait-for-db.sh
 set -e
 
 DB_HOST="avitoprservice-db"
