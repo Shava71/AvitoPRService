@@ -32,6 +32,9 @@ WORKDIR /app
 COPY AvitoPRService.Api/sql ./sql 
 COPY --from=publish /app/publish .
 COPY AvitoPRService.Api/wait-for-db.sh .
-RUN sed -i 's/\r$//' wait-for-db.sh && chmod +x wait-for-db.sh
+USER root
+RUN sed -i 's/\r$//' wait-for-db.sh && \
+    chmod +x wait-for-db.sh
+USER $APP_UID
 
 ENTRYPOINT ["./wait-for-db.sh"]
