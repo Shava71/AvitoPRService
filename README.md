@@ -1,13 +1,12 @@
 # AvitoPRService: Сервис назначения ревьюеров для Pull Request'ов
 
-## Тестовое задание Avito Backend Autumn 2025
-
+## Тестовое задание Avito Backend Autumn 2025\
 Реализация микросервиса для автоматического назначения ревьюверов на PR,
 управления командами и пользователями.
 
 Стек: **.NET 9**, **EF Core**, **PostgreSQL**, **Docker**, **xUnit**, **Moq**,
 **k6**, **OpenAPI**\
-Автор: *Ериков Илья*
+Автор: *\Ериков Илья*\
 
 ---
 
@@ -300,6 +299,3 @@ BEFORE INSERT ON reviewers
 FOR EACH ROW
 EXECUTE FUNCTION check_reviewer_limit();
 ```
-
-
-
