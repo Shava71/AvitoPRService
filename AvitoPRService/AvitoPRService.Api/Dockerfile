@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 USER root
 WORKDIR /app
 EXPOSE 8080
@@ -32,5 +32,6 @@ WORKDIR /app
 COPY AvitoPRService.Api/sql ./sql 
 COPY --from=publish /app/publish .
 COPY AvitoPRService.Api/wait-for-db.sh .
+RUN dos2unix wait-for-db.sh && chmod +x wait-for-db.sh
 
 ENTRYPOINT ["./wait-for-db.sh"]
